@@ -1,5 +1,10 @@
-build:
-	docker build -t null/invoicer .
+VERSION=`cat ./version`
 
-run:
+build:
+	docker build -t null/invoicer:$(VERSION) .
+
+start:
 	docker compose up -d
+
+stop:
+	docker compose down
