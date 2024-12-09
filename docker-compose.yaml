@@ -1,5 +1,18 @@
 services:
   api:
-    build: .
+    container_name: invoicer-api
+    image: null-solutions/invoicer:0.0.1
     ports:
       - "3000:3000"
+  db:
+    container_name: postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: 'invoicer'
+      POSTGRES_PASSWORD: 'invoicer'
+    volumes:
+      - invoicer:/var/lib/postgresql/data
+
+volumes:
+  invoicer:
