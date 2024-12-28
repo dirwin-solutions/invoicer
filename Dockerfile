@@ -2,6 +2,7 @@ FROM node:lts-alpine
 WORKDIR /app
 
 COPY src/ ./src/
+COPY migrations/ ./migrations/
 COPY package* ./
 
 EXPOSE 4971
