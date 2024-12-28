@@ -3,8 +3,11 @@ services:
     container_name: invoicer-api
     image: null-solutions/invoicer:0.0.1
     ports:
-      - "3000:3000"
-  db:
+      - "4971:4971"
+    environment:
+      DATABASE_URL: 'postgres://invoicer:invoicer@postgres:5432/invoicer'
+
+  postgres:
     container_name: postgres
     image: postgres
     restart: always
@@ -13,6 +16,8 @@ services:
       POSTGRES_PASSWORD: 'invoicer'
     volumes:
       - invoicer:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
 volumes:
   invoicer:
