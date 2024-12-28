@@ -6,6 +6,11 @@ services:
       - "4971:4971"
     environment:
       DATABASE_URL: 'postgres://invoicer:invoicer@postgres:5432/invoicer'
+      PGHOST: 'postgres'
+      PGDATABASE: 'invoicer'
+      PGPORT: 5432
+      PGUSER: 'invoicer'
+      PGPASSWORD: 'invoicer'
 
   postgres:
     container_name: postgres
