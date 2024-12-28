@@ -1,5 +1,8 @@
 VERSION=`cat ./version`
 
+compile:
+	npx tsc
+
 build:
 	docker build -t null-solutions/invoicer:$(VERSION) .
 

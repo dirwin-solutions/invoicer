@@ -4,7 +4,7 @@
   "description": "App that generates invoices to customers based on services provided",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node app/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "node-pg-migrate"
   },
@@ -12,10 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.2",
-    "pg": "^8.13.1",
-    "node-pg-migrate": "^7.8.0"
+    "node-pg-migrate": "^7.8.0",
+    "pg": "^8.13.1"
   },
   "devDependencies": {
-    "eslint": "^9.16.0"
+    "@types/pg": "^8.11.10",
+    "eslint": "^9.16.0",
+    "typescript": "^5.7.2"
   }
 }

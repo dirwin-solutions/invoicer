@@ -1,7 +1,7 @@
 FROM node:lts-alpine
 WORKDIR /app
 
-COPY src/ ./src/
+COPY app/ ./app/
 COPY migrations/ ./migrations/
 COPY package* ./
 
