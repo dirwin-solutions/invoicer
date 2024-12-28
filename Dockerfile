@@ -4,7 +4,7 @@ WORKDIR /app
 COPY src/ ./src/
 COPY package* ./
 
-EXPOSE 3000
+EXPOSE 4971
 
 RUN npm install --omit=dev
 
