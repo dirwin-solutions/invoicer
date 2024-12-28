@@ -1,9 +1,10 @@
 const express = require('express')
+const PORT = 4971
 app = express()
 
 app.get('/', async (req, res) => {
   res.send('hi')
 })
 
-app.listen(3000)
-console.log('App active on http://localhost:3000')
+app.listen(PORT)
+console.log(`App active on http://localhost:${PORT}`)
