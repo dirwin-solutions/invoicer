@@ -8,3 +8,6 @@ start:
 
 stop:
 	docker compose down
+
+migrations:
+	npm run migrate up
