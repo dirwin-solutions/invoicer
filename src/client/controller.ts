@@ -6,6 +6,8 @@ import Controller from '../base/Controller'
 export default class ClientController extends Controller<Client> {
   constructor(service: ClientService) {
     super(service)
+    this.createClient = this.createClient.bind(this)
+    this.updateClientById = this.updateClientById.bind(this)
   }
 
   async createClient(req: Request, res: Response, next: NextFunction) {
