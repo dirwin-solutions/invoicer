@@ -11,6 +11,10 @@ class Service<T> {
     return await this.model.create(data)
   }
 
+  async list(): Promise<T[]> {
+    return await this.model.list()
+  }
+
   async getById(id: number): Promise<T> {
     return await this.model.getById(id)
   }
