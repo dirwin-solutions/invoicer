@@ -34,6 +34,22 @@ class Model<T> {
     }
   }
 
+  async list(): Promise<T[]> {
+    const query = [
+      'SELECT * FROM',
+      this.tableName
+    ].join(' ')
+
+    let client: PoolClient | null = null
+    try {
+      client = await this.pool.connect()
+      const result = await client.query(query)
+      return result.rows
+    } finally {
+      if(client) client.release()
+    }
+  }
+
   async getById(id: number): Promise<T> {
     const query = [
       'SELECT * FROM',
