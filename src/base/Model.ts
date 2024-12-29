@@ -22,13 +22,12 @@ class Model<T> {
       `VALUES(${valuePlaceholder})`,
       'RETURNING *'
     ].join(' ')
+    const values = Object.values(serializeData(filtered))
+
     let client: PoolClient | null = null
     try {
       client = await this.pool.connect()
-      const result = await client.query(
-        query,
-        Object.values(serializeData(filtered))
-      )
+      const result = await client.query(query, values)
       return result.rows[0]
     } finally {
       if(client) client.release()
@@ -41,10 +40,12 @@ class Model<T> {
       this.tableName,
       'WHERE id = $1',
     ].join(' ')
+    const values = [id]
+
     let client: PoolClient | null = null
     try {
       client = await this.pool.connect()
-      const result = await client.query(query, [id])
+      const result = await client.query(query, values)
       if (result.rowCount == 0) {
         throw Error(`No ${this.tableName} with id ${id}`)
       }
@@ -70,6 +71,7 @@ class Model<T> {
       'RETURNING *'
     ].join(' ')
     const values = [id, ...Object.values(serializeData(filtered))]
+
     let client: PoolClient | null = null
     try {
       client = await this.pool.connect()
