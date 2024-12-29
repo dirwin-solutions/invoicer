@@ -46,7 +46,7 @@ class Model<T> {
     try {
       client = await this.pool.connect()
       const result = await client.query(query, values)
-      if (result.rowCount == 0) {
+      if (!result.rowCount) {
         throw Error(`No ${this.tableName} with id ${id}`)
       }
       return result.rows[0]
