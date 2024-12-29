@@ -6,6 +6,7 @@ export default class RouterBase<T> {
   constructor(controller: Controller<T>) {
     this.controller = controller
     this.router = Router()
+    this.router.get('/', controller.list)
     this.router.get('/:id', controller.getById)
   }
 
