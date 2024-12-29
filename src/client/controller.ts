@@ -53,4 +53,3 @@ export default class ClientController extends Controller<Client> {
     }
   }
 }
-
