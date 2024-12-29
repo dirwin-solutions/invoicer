@@ -58,6 +58,9 @@ class Model<T> {
     const filtered = Object.fromEntries(
       Object.entries(data).filter(([_,v]) => v !== undefined)
     )
+    if(!Object.keys(filtered).length) {
+      throw new Error('Must supply at least one field to update')
+    }
     filtered.updatedAt = new Date()
     const parsedData = Object.keys(filtered).map((k,i) => `"${k}" = $${i+2}`).join()
     const query = [
