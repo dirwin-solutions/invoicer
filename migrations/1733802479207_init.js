@@ -23,7 +23,7 @@ exports.up = (pgm) => {
     email: { type: 'varchar(256)', notNull: true },
     phoneNumber: { type: 'varchar(256)', notNull: true },
     note: { type: 'varchar(512)' },
-    active: { type: 'boolean', default: true },
+    active: { type: 'boolean', default: true, notNull: true },
     createdAt: {
       type: 'timestamp',
       notNull: true,
