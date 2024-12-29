@@ -2,7 +2,7 @@ import Model from './Model'
 import { CreateInput, UpdateInput } from './types'
 
 class Service<T> {
-  model: Model<T>
+  protected model: Model<T>
   constructor(model: Model<T>) {
     this.model = model
   }
