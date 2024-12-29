@@ -3,8 +3,8 @@ import { CreateInput, UpdateInput } from './types'
 import { serializeData } from '../db/util'
 
 class Model<T> {
-  tableName: string
-  pool: Pool
+  protected tableName: string
+  protected pool: Pool
   constructor(pool: Pool, tableName: string) {
     this.tableName = tableName
     this.pool = pool
