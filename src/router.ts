@@ -3,6 +3,7 @@ import { Pool } from 'pg'
 import { Model, Service, Controller, ApiRouter, DatabaseEntity } from './base'
 import { Client } from './client'
 import { ChargeableType } from './chargeable-type'
+import { Chargeable } from './chargeable'
 
 interface ModuleOverrides<T> {
   model?: new (pool: Pool, tableName: string) => Model<T>
@@ -34,5 +35,6 @@ const apiRouter = Router()
 
 registerModule<Client>(apiRouter, pool, 'client')
 registerModule<ChargeableType>(apiRouter, pool, 'chargeable_type')
+registerModule<Chargeable>(apiRouter, pool, 'chargeable')
 
 export default apiRouter
