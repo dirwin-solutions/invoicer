@@ -1,0 +1,9 @@
+FROM node:lts-alpine
+WORKDIR /invoicer-migrations
+
+COPY migrations/ ./migrations/
+COPY package*.json ./
+
+RUN npm install node-pg-migrate
+
+CMD ["npm", "run", "migrate", "up"]

@@ -2,8 +2,11 @@ import { Router } from 'express'
 import { Pool } from 'pg'
 import { Model, Service, Controller, ApiRouter, DatabaseEntity } from './base'
 import { Client } from './client'
+import { Address } from './address'
 import { ChargeableType } from './chargeable-type'
 import { Chargeable } from './chargeable'
+import { Invoice } from './invoice'
+import { InvoiceChargeable } from './invoice-chargeable'
 
 interface ModuleOverrides<T> {
   model?: new (pool: Pool, tableName: string) => Model<T>
@@ -34,7 +37,10 @@ const pool = new Pool()
 const apiRouter = Router()
 
 registerModule<Client>(apiRouter, pool, 'client')
+registerModule<Address>(apiRouter, pool, 'address')
 registerModule<ChargeableType>(apiRouter, pool, 'chargeable_type')
 registerModule<Chargeable>(apiRouter, pool, 'chargeable')
+registerModule<Invoice>(apiRouter, pool, 'invoice')
+registerModule<InvoiceChargeable>(apiRouter, pool, 'invoice_chargeable')
 
 export default apiRouter
