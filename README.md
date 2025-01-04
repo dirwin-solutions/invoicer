@@ -10,16 +10,13 @@ App that generates invoices for customers
 ## Getting Started
  - `npm i`
  - `make refresh` or `npx tsc && docker compose build && docker compose up -d`
-- `docker exec -it invoicer-api sh`
-   - Then while inside the container:
-     - `npm run migrate up`
 
 ## Roadmap (mvp)
  - CRUD on clients (*done*)
  - CRUD on chargeable types (*done*)
- - CRUD on chargeables (services or items you sell/rent) your company provides (*to do*)
- - create invoices for your clients (*to do*)
-    - add discountable chargeables to those invoices (*to do*)
+ - CRUD on chargeables (services or items you sell/rent) your company provides (*done*)
+ - create invoices for your clients (*in progress*)
+    - add discountable chargeables to those invoices (*in progress*)
     - calculate invoice totals based on the chargeables on a given invoice (*to do*)
     - generate pdf from invoice (*to do*)
  - view all invoices for a given client (*to do*)
