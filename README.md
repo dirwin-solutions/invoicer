@@ -2,11 +2,18 @@
 
 App that generates invoices for customers
 
+## You will need
+ - [node](https://nodejs.org/en) `>= v22.0.0`
+ - [Docker](https://docs.docker.com/desktop/)
+ - GNU Make (optional)
+
 ## Getting Started
- - npm i
- - make compile
- - make build
- - make start
+ - `npm i`
+ - `make refresh` or `npx tsc && docker compose build && docker compose up -d`
+- `docker exec -it invoicer-api sh`
+   - Then while inside the container:
+     - `cd invoicer`
+     - `npm run migrate up`
 
 ## Roadmap (mvp)
  - CRUD on clients (*done*)
