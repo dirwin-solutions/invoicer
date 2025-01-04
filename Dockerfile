@@ -2,8 +2,7 @@ FROM node:lts-alpine
 WORKDIR /invoicer
 
 COPY app/ ./app/
-COPY migrations/ ./migrations/
-COPY package* ./
+COPY package*.json ./
 
 EXPOSE 4971
 
