@@ -1,5 +1,5 @@
 FROM node:lts-alpine
-WORKDIR /app
+WORKDIR /invoicer
 
 COPY app/ ./app/
 COPY migrations/ ./migrations/
