@@ -1,10 +1,8 @@
-VERSION=`cat ./version`
-
 compile:
 	npx tsc
 
 build_docker:
-	docker build -t null-solutions/invoicer:$(VERSION) .
+	docker compose build
 
 build: compile build_docker
 
@@ -15,6 +13,3 @@ refresh: build start
 
 stop:
 	docker compose down
-
-migrations:
-	npm run migrate up

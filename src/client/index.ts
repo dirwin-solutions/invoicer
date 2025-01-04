@@ -1,11 +1,5 @@
-import ClientModel from './model'
-import ClientService from './service'
-import ClientController from './controller'
-import ClientRouter from './router'
+import Client from './types'
 
-export default {
-  ClientModel,
-  ClientService,
-  ClientController,
-  ClientRouter
+export {
+  Client
 }

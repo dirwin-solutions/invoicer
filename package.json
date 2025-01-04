@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "App that generates invoices to customers based on services provided",
   "main": "index.js",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "start": "node app/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
