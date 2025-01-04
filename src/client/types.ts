@@ -1,7 +1,5 @@
-import { CreateInput } from '../base/types'
-
-export interface Client {
-  id: number
+import { DatabaseEntity } from '../base'
+export default interface Client extends DatabaseEntity {
   firstName?: string
   lastName?: string
   businessName: string
@@ -9,6 +7,4 @@ export interface Client {
   phoneNumber: string
   note?: string
   active: boolean
-  createdAt: Date
-  updatedAt?: Date
 }
