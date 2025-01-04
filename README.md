@@ -16,7 +16,7 @@ App that generates invoices for customers
 
 ## Roadmap (mvp)
  - CRUD on clients (*done*)
- - CRUD on chargeable types (*to do*)
+ - CRUD on chargeable types (*done*)
  - CRUD on chargeables (services or items you sell/rent) your company provides (*to do*)
  - create invoices for your clients (*to do*)
     - add discountable chargeables to those invoices (*to do*)
