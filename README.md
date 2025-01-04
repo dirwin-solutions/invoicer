@@ -12,7 +12,6 @@ App that generates invoices for customers
  - `make refresh` or `npx tsc && docker compose build && docker compose up -d`
 - `docker exec -it invoicer-api sh`
    - Then while inside the container:
-     - `cd invoicer`
      - `npm run migrate up`
 
 ## Roadmap (mvp)
