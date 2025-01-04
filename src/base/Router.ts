@@ -6,8 +6,10 @@ export default class RouterBase<T> {
   constructor(controller: Controller<T>) {
     this.controller = controller
     this.router = Router()
+    this.router.post('/', controller.create)
     this.router.get('/', controller.list)
     this.router.get('/:id', controller.getById)
+    this.router.patch('/:id', controller.updateById)
   }
 
   getRouter() {
