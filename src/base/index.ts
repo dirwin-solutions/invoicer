@@ -2,7 +2,7 @@ import Model from './Model'
 import Service from './Service'
 import Controller from './Controller'
 import ApiRouter from './ApiRouter'
-import { DatabaseEntity, CreateInput, UpdateInput } from './types'
+import { DatabaseEntity, CreateInput, UpdateInput, Detail } from './types'
 
 export {
   Model,
@@ -11,5 +11,6 @@ export {
   ApiRouter,
   DatabaseEntity,
   CreateInput,
-  UpdateInput
+  UpdateInput,
+  Detail,
 }
