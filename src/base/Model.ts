@@ -10,7 +10,11 @@ class Model<T> {
     this.pool = pool
   }
 
-  async create(data: CreateInput<T>): Promise<T> {
+  async getPoolClient(): Promise<PoolClient> {
+    return await this.pool.connect()
+  }
+
+  async create(data: CreateInput<T>, client?: PoolClient): Promise<T> {
     const filtered = Object.fromEntries(
       Object.entries(data).filter(([_,v]) => v !== undefined)
     )
@@ -24,33 +28,31 @@ class Model<T> {
     ].join(' ')
     const values = Object.values(serializeData(filtered))
 
-    let client: PoolClient | null = null
+    const queryClient = client || (await this.getPoolClient())
     try {
-      client = await this.pool.connect()
-      const result = await client.query(query, values)
+      const result = await queryClient.query(query, values)
       return result.rows[0]
     } finally {
-      if(client) client.release()
+      if(!client) queryClient.release()
     }
   }
 
-  async list(): Promise<T[]> {
+  async list(client?: PoolClient): Promise<T[]> {
     const query = [
       'SELECT * FROM',
       this.tableName
     ].join(' ')
 
-    let client: PoolClient | null = null
+    const queryClient = client || (await this.getPoolClient())
     try {
-      client = await this.pool.connect()
-      const result = await client.query(query)
+      const result = await queryClient.query(query)
       return result.rows
     } finally {
-      if(client) client.release()
+      if(!client) queryClient.release()
     }
   }
 
-  async getById(id: number): Promise<T> {
+  async getById(id: number, client?: PoolClient): Promise<T> {
     const query = [
       'SELECT * FROM',
       this.tableName,
@@ -58,20 +60,19 @@ class Model<T> {
     ].join(' ')
     const values = [id]
 
-    let client: PoolClient | null = null
+    const queryClient = client || (await this.getPoolClient())
     try {
-      client = await this.pool.connect()
-      const result = await client.query(query, values)
+      const result = await queryClient.query(query, values)
       if (!result.rowCount) {
         throw Error(`No ${this.tableName} with id ${id}`)
       }
       return result.rows[0]
     } finally {
-      if(client) client.release()
+      if(!client) queryClient.release()
     }
   }
 
-  async updateById(id: number, data: UpdateInput<T>): Promise<T> {
+  async updateById(id: number, data: UpdateInput<T>, client?: PoolClient): Promise<T> {
     const filtered = Object.fromEntries(
       Object.entries(data).filter(([_,v]) => v !== undefined)
     )
@@ -88,16 +89,15 @@ class Model<T> {
     ].join(' ')
     const values = [id, ...Object.values(serializeData(filtered))]
 
-    let client: PoolClient | null = null
+    const queryClient = client || (await this.getPoolClient())
     try {
-      client = await this.pool.connect()
-      const result = await client.query(query, values)
+      const result = await queryClient.query(query, values)
       if(!result.rowCount) {
         throw Error(`No ${this.tableName} with id ${id}`)
       }
       return result.rows[0]
     } finally {
-      if(client) client.release()
+      if(!client) queryClient.release()
     }
   }
 }
