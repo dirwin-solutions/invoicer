@@ -1,5 +1,6 @@
-import { Chargeable } from './types'
+import { Chargeable, ChargeableDetail } from './types'
 
 export {
-  Chargeable
+  Chargeable,
+  ChargeableDetail,
 }
