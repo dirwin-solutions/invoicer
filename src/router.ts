@@ -5,42 +5,89 @@ import { Client } from './client'
 import { Address } from './address'
 import { ChargeableType } from './chargeable-type'
 import { Chargeable } from './chargeable'
-import { Invoice } from './invoice'
-import { InvoiceChargeable } from './invoice-chargeable'
+import { Invoice, InvoiceService, InvoiceController, InvoiceRouter } from './invoice'
+import { InvoiceChargeable, InvoiceChargeableModel, InvoiceChargeableService } from './invoice-chargeable'
 
-interface ModuleOverrides<T> {
-  model?: new (pool: Pool, tableName: string) => Model<T>
-  service?: new (model: Model<T>) => Service<T>
-  controller?: new (service: Service<T>) => Controller<T>
-  router?: new (controller: Controller<T>) => ApiRouter<T>
-}
-
-function registerModule<T extends DatabaseEntity>(
-  apiRouter: Router,
-  pool: Pool,
-  tableName: string,
-  overrides: ModuleOverrides<T> = {}
-): void {
-  const ModuleModel = overrides.model || Model
-  const ModuleService = overrides.service || Service
-  const ModuleController = overrides.controller || Controller
-  const ModuleRouter = overrides.router || ApiRouter
-
-  const model = new ModuleModel(pool, tableName)
-  const service = new ModuleService(model)
-  const controller = new ModuleController(service)
-  const router = new ModuleRouter(controller).getRouter()
-  apiRouter.use(`/${tableName}`, router)
-}
-
+//////////////////////
+//                  //
+//    MODEL LAYER   //
+//                  //
+//////////////////////
 const pool = new Pool()
-const apiRouter = Router()
+const clientModel = new Model<Client>(pool, 'client')
+const addressModel = new Model<Address>(pool, 'address')
+const chargeableTypeModel = new Model<ChargeableType>(pool, 'chargeable_type')
+const chargeableModel = new Model<Chargeable>(pool, 'chargeable')
+const invoiceModel = new Model<Invoice>(pool, 'invoice')
+const invoiceChargeableModel = new InvoiceChargeableModel(pool)
 
-registerModule<Client>(apiRouter, pool, 'client')
-registerModule<Address>(apiRouter, pool, 'address')
-registerModule<ChargeableType>(apiRouter, pool, 'chargeable_type')
-registerModule<Chargeable>(apiRouter, pool, 'chargeable')
-registerModule<Invoice>(apiRouter, pool, 'invoice')
-registerModule<InvoiceChargeable>(apiRouter, pool, 'invoice_chargeable')
+//////////////////////
+//                  //
+//  SERVICE LAYER   //
+//                  //
+//////////////////////
+const clientService = new Service<Client>(clientModel)
+const addressService = new Service<Address>(addressModel)
+const chargeableTypeService = new Service<ChargeableType>(chargeableTypeModel)
+const chargeableService = new Service<Chargeable>(chargeableModel)
+const invoiceService = new InvoiceService(
+  invoiceModel,
+  chargeableModel,
+  chargeableTypeModel,
+  clientModel,
+  addressModel,
+  invoiceChargeableModel,
+)
+const invoiceChargeableService = new InvoiceChargeableService(
+  invoiceChargeableModel,
+  invoiceModel,
+  chargeableModel,
+)
+
+//////////////////////
+//                  //
+// CONTROLLER LAYER //
+//                  //
+//////////////////////
+const clientController = new Controller<Client>(clientService)
+const addressController = new Controller<Address>(addressService)
+const chargeableTypeController = new Controller<ChargeableType>(
+  chargeableTypeService
+)
+const chargeableController = new Controller<Chargeable>(chargeableService)
+const invoiceController = new InvoiceController(
+  invoiceService,
+  invoiceChargeableService
+)
+const invoiceChargeableController = new Controller<InvoiceChargeable>(
+  invoiceChargeableService
+)
+
+//////////////////////
+//                  //
+//   ROUTER LAYER   //
+//                  //
+//////////////////////
+const clientRouter = new ApiRouter<Client>(clientController)
+const addressRouter = new ApiRouter<Address>(addressController)
+const chargeableTypeRouter = new ApiRouter<ChargeableType>(
+  chargeableTypeController
+)
+const chargeableRouter = new ApiRouter<Chargeable>(chargeableController)
+const invoiceRouter = new InvoiceRouter(invoiceController)
+const invoiceChargeableRouter = new ApiRouter<InvoiceChargeable>(invoiceChargeableController)
+
+//////////////////////
+//                  //
+//   REGISTRATION   //
+//                  //
+//////////////////////
+const apiRouter = Router()
+apiRouter.use('/client', clientRouter.getRouter())
+apiRouter.use('/address', addressRouter.getRouter())
+apiRouter.use('/chargeable_type', chargeableTypeRouter.getRouter())
+apiRouter.use('/chargeable', chargeableRouter.getRouter())
+apiRouter.use('/invoice', invoiceRouter.getRouter())
+apiRouter.use('/invoice_chargeable', invoiceChargeableRouter.getRouter())
 
 export default apiRouter

@@ -1,5 +1,10 @@
-import { InvoiceChargeable } from './types'
+import { InvoiceChargeable, InvoiceChargeableDetail } from './types'
+import InvoiceChargeableModel from './model'
+import InvoiceChargeableService from './service'
 
 export {
-  InvoiceChargeable
+  InvoiceChargeable,
+  InvoiceChargeableDetail,
+  InvoiceChargeableModel,
+  InvoiceChargeableService,
 }

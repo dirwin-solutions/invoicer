@@ -1,4 +1,4 @@
-import ChargeableType from './types'
+import { ChargeableType } from './types'
 
 export {
   ChargeableType
